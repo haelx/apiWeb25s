@@ -118,4 +118,24 @@ class Cliente
         }
     }
 
+    public function ListarClientes()
+    {
+        $this->con->createConnection();
+        $sql = "select * from cliente";
+        $resp = $this->con->executeQuery($sql);
+        $data=array();
+        while ($row = mysqli_fetch_assoc($resp)) {
+            $data[]=$row;
+        }
+        echo json_encode($data);
+    }
+public function BuscarCliente()
+{
+    $this->con->createConnection();
+    $sql = "select * from cliente where idCliente='$this->idCliente'";
+    $resp = $this->con->executeQuery($sql);
+    $data= mysqli_fetch_assoc($resp);
+    echo json_encode($data);
+}
+
 }

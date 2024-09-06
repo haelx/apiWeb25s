@@ -22,7 +22,6 @@ if($method=="POST"){
     $apellido1 = validarCampo($data->apellido1, 'apellido1');
     $apellido2 = validarCampo($data->apellido2, 'apellido2', true); // Hacemos que sea opcional
     $email = validarCampo($data->email, 'email');
-
 // Validar el formato del email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo json_encode([
@@ -31,7 +30,6 @@ if($method=="POST"){
         ]);
         exit(); // Termina la ejecución del script
     }
-
 // Sanitizar dirección, asumiendo que siempre es requerida
     $direccion = validarCampo($data->direccion, 'direccion');
 
@@ -42,4 +40,14 @@ if($method=="POST"){
     $cliente->setEmail($email);
     $cliente->setDireccion($direccion);
     $cliente->RegistrarCliente();
+}elseif ($method=="GET") {
+   if($data->operacion=="ListarClientes"){
+       $cliente = new Cliente();
+       $cliente->ListarClientes();
+   }
+   elseif ($data->operacion=="BuscarCliente"){
+       $cliente = new Cliente();
+       $cliente->setIdCliente($data->idCliente);
+       $cliente->BuscarCliente();
+   }
 }
